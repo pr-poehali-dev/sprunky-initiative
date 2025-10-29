@@ -50,13 +50,30 @@ const Index = () => {
       const ctx = audioContextRef.current;
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
       
-      oscillator.connect(gainNode);
+      oscillator.connect(filter);
+      filter.connect(gainNode);
       gainNode.connect(ctx.destination);
       
-      oscillator.type = 'triangle';
+      const soundTypes = ['sawtooth', 'square', 'triangle', 'sine', 'sawtooth', 'square', 'triangle', 'sine'];
+      oscillator.type = soundTypes[charId - 1] as OscillatorType;
+      
       oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
-      gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+      
+      if (charId === 1 || charId === 2) {
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, ctx.currentTime);
+        gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+      } else if (charId === 3 || charId === 4) {
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1000, ctx.currentTime);
+        gainNode.gain.setValueAtTime(0.25, ctx.currentTime);
+      } else {
+        filter.type = 'highpass';
+        filter.frequency.setValueAtTime(500, ctx.currentTime);
+        gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+      }
       
       oscillator.start();
       oscillatorsRef.current.set(charId, oscillator);
