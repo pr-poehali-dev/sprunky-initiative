@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Article {
   id: number;
@@ -80,6 +80,40 @@ const articles: Article[] = [
 
 const Index = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  useEffect(() => {
+    audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    return () => {
+      audioContextRef.current?.close();
+    };
+  }, []);
+
+  const playOperaNote = (frequency: number, duration: number = 0.3) => {
+    if (!audioContextRef.current) return;
+    
+    const ctx = audioContextRef.current;
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+    
+    oscillator.start(ctx.currentTime);
+    oscillator.stop(ctx.currentTime + duration);
+  };
+
+  const handleCardHover = (articleId: number) => {
+    setHoveredCard(articleId);
+    const frequencies = [523.25, 587.33, 659.25, 698.46, 783.99, 880.00];
+    playOperaNote(frequencies[articleId - 1] || 440);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -107,11 +141,20 @@ const Index = () => {
           </p>
 
           <div className="flex justify-center gap-4 flex-wrap">
-            <Button size="lg" className="rounded-full font-rubik font-semibold shadow-lg hover:scale-105 transition-transform">
+            <Button 
+              size="lg" 
+              className="rounded-full font-rubik font-semibold shadow-lg hover:scale-105 transition-transform"
+              onClick={() => playOperaNote(523.25, 0.5)}
+            >
               <Icon name="PenLine" size={20} className="mr-2" />
               Написать статью
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full font-rubik font-semibold hover:scale-105 transition-transform">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="rounded-full font-rubik font-semibold hover:scale-105 transition-transform"
+              onClick={() => playOperaNote(659.25, 0.5)}
+            >
               <Icon name="Bell" size={20} className="mr-2" />
               Подписаться
             </Button>
@@ -123,7 +166,7 @@ const Index = () => {
             <Card
               key={article.id}
               className="group relative overflow-hidden border-2 hover:border-primary transition-all duration-300 cursor-pointer hover:-translate-y-2 hover:shadow-2xl"
-              onMouseEnter={() => setHoveredCard(article.id)}
+              onMouseEnter={() => handleCardHover(article.id)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{
                 animationDelay: `${index * 0.1}s`
