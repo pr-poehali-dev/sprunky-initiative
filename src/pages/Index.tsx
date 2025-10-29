@@ -6,20 +6,20 @@ import { useState, useEffect, useRef } from "react";
 interface Character {
   id: number;
   name: string;
-  emoji: string;
+  image: string;
   sound: number;
   color: string;
 }
 
 const characters: Character[] = [
-  { id: 1, name: "Бит", emoji: "🎵", sound: 261.63, color: "bg-blue-500" },
-  { id: 2, name: "Бас", emoji: "🎸", sound: 329.63, color: "bg-purple-500" },
-  { id: 3, name: "Драм", emoji: "🥁", sound: 392.00, color: "bg-pink-500" },
-  { id: 4, name: "Синт", emoji: "🎹", sound: 523.25, color: "bg-orange-500" },
-  { id: 5, name: "Вокал", emoji: "🎤", sound: 659.25, color: "bg-green-500" },
-  { id: 6, name: "Труба", emoji: "🎺", sound: 783.99, color: "bg-yellow-500" },
-  { id: 7, name: "Скрипка", emoji: "🎻", sound: 880.00, color: "bg-red-500" },
-  { id: 8, name: "Саксофон", emoji: "🎷", sound: 987.77, color: "bg-indigo-500" }
+  { id: 1, name: "Бобби", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 261.63, color: "bg-blue-500" },
+  { id: 2, name: "Пурпл", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 329.63, color: "bg-purple-500" },
+  { id: 3, name: "Пинки", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/76bf33b7-4ddd-49ae-8ff9-7e25ca346084.jpg", sound: 392.00, color: "bg-pink-500" },
+  { id: 4, name: "Санни", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 523.25, color: "bg-orange-500" },
+  { id: 5, name: "Грини", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 659.25, color: "bg-green-500" },
+  { id: 6, name: "Йеллоу", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/76bf33b7-4ddd-49ae-8ff9-7e25ca346084.jpg", sound: 783.99, color: "bg-yellow-500" },
+  { id: 7, name: "Редди", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 880.00, color: "bg-red-500" },
+  { id: 8, name: "Инди", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 987.77, color: "bg-indigo-500" }
 ];
 
 const Index = () => {
@@ -136,22 +136,26 @@ const Index = () => {
             return (
               <Card
                 key={char.id}
-                className={`cursor-pointer transition-all duration-300 border-4 ${
+                className={`cursor-pointer transition-all duration-300 border-4 overflow-hidden ${
                   isActive 
                     ? 'scale-110 shadow-2xl animate-bounce-slow border-white' 
                     : 'hover:scale-105 border-transparent'
                 } ${char.color}`}
                 onClick={() => toggleCharacter(char.id, char.sound)}
               >
-                <div className="p-8 text-center">
-                  <div className={`text-8xl mb-4 ${isActive ? 'animate-bounce-slow' : ''}`}>
-                    {char.emoji}
+                <div className="p-4 text-center">
+                  <div className={`mb-3 ${isActive ? 'animate-bounce-slow' : ''}`}>
+                    <img 
+                      src={char.image} 
+                      alt={char.name}
+                      className="w-full h-32 object-contain rounded-lg bg-white/20"
+                    />
                   </div>
-                  <h3 className="text-2xl font-bold font-rubik text-white drop-shadow-lg">
+                  <h3 className="text-xl md:text-2xl font-bold font-rubik text-white drop-shadow-lg">
                     {char.name}
                   </h3>
                   {isActive && (
-                    <div className="mt-2 text-4xl animate-pulse">🔊</div>
+                    <div className="mt-2 text-3xl animate-pulse">🔊</div>
                   )}
                 </div>
               </Card>
