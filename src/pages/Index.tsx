@@ -2,10 +2,44 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Index = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  useEffect(() => {
+    audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    return () => {
+      audioContextRef.current?.close();
+    };
+  }, []);
+
+  const playSound = (frequency: number, type: OscillatorType = 'sine', duration: number = 0.2) => {
+    if (!audioContextRef.current) return;
+    
+    const ctx = audioContextRef.current;
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+    
+    oscillator.start(ctx.currentTime);
+    oscillator.stop(ctx.currentTime + duration);
+  };
+
+  const handleCardHover = (index: number) => {
+    setHoveredIndex(index);
+    const notes = [523.25, 659.25, 783.99];
+    playSound(notes[index], 'triangle', 0.3);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -35,13 +69,25 @@ const Index = () => {
           </div>
 
           <div className="flex gap-4">
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => playSound(800, 'sine', 0.15)}
+            >
               <Icon name="Search" size={20} />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => playSound(900, 'sine', 0.15)}
+            >
               <Icon name="User" size={20} />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => playSound(1000, 'sine', 0.15)}
+            >
               <Icon name="ShoppingBag" size={20} />
             </Button>
           </div>
@@ -63,11 +109,20 @@ const Index = () => {
           </p>
 
           <div className="flex gap-4 flex-wrap justify-center">
-            <Button size="lg" className="rounded-full font-rubik font-semibold px-8 hover:scale-110 transition-transform shadow-lg animate-bounce-slow">
+            <Button 
+              size="lg" 
+              className="rounded-full font-rubik font-semibold px-8 hover:scale-110 transition-transform shadow-lg animate-bounce-slow"
+              onClick={() => playSound(523.25, 'square', 0.4)}
+            >
               Мужская коллекция
               <Icon name="ArrowRight" size={20} className="ml-2" />
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full font-rubik font-semibold px-8 hover:scale-110 transition-transform">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="rounded-full font-rubik font-semibold px-8 hover:scale-110 transition-transform"
+              onClick={() => playSound(659.25, 'square', 0.4)}
+            >
               Женская коллекция
             </Button>
           </div>
@@ -88,7 +143,7 @@ const Index = () => {
                 key={index}
                 className="group relative overflow-hidden cursor-pointer hover:-translate-y-4 transition-all duration-300 hover:shadow-2xl border-2 hover:border-primary animate-float"
                 style={{ animationDelay: `${index * 0.2}s` }}
-                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseEnter={() => handleCardHover(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className={`${category.color} h-64 flex items-center justify-center relative overflow-hidden`}>
@@ -96,7 +151,11 @@ const Index = () => {
                 </div>
                 <div className="p-6 text-center">
                   <h4 className="text-2xl font-bold font-rubik mb-2">{category.title}</h4>
-                  <Button variant="ghost" className="mt-4 font-rubik">
+                  <Button 
+                    variant="ghost" 
+                    className="mt-4 font-rubik"
+                    onClick={() => playSound(440 + index * 100, 'sine', 0.3)}
+                  >
                     Смотреть коллекцию
                     <Icon name="ArrowRight" size={16} className="ml-2" />
                   </Button>
@@ -120,7 +179,11 @@ const Index = () => {
                 От знаменитых рубашек поло до роскошных костюмов — каждая деталь 
                 создана с вниманием к качеству и стилю.
               </p>
-              <Button size="lg" className="font-rubik font-semibold">
+              <Button 
+                size="lg" 
+                className="font-rubik font-semibold"
+                onClick={() => playSound(698.46, 'sawtooth', 0.3)}
+              >
                 Узнать больше
               </Button>
             </div>
@@ -136,6 +199,7 @@ const Index = () => {
                   key={i}
                   className={`aspect-square bg-gradient-to-br ${colors.from} ${colors.to} rounded-2xl hover:scale-110 transition-all duration-300 animate-glow cursor-pointer`}
                   style={{ animationDelay: `${i * 0.3}s` }}
+                  onClick={() => playSound(400 + i * 150, 'sine', 0.2)}
                 />
               ))}
             </div>
@@ -174,7 +238,12 @@ const Index = () => {
               placeholder="Ваш email"
               className="flex-1 px-6 py-3 rounded-full text-foreground font-inter"
             />
-            <Button size="lg" variant="secondary" className="rounded-full font-rubik font-semibold">
+            <Button 
+              size="lg" 
+              variant="secondary" 
+              className="rounded-full font-rubik font-semibold"
+              onClick={() => playSound(880, 'triangle', 0.5)}
+            >
               Подписаться
             </Button>
           </div>
