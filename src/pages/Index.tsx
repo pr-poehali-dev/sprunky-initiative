@@ -12,14 +12,14 @@ interface Character {
 }
 
 const characters: Character[] = [
-  { id: 1, name: "Бобби", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 261.63, color: "bg-blue-500" },
-  { id: 2, name: "Пурпл", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 329.63, color: "bg-purple-500" },
-  { id: 3, name: "Пинки", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/76bf33b7-4ddd-49ae-8ff9-7e25ca346084.jpg", sound: 392.00, color: "bg-pink-500" },
-  { id: 4, name: "Санни", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 523.25, color: "bg-orange-500" },
-  { id: 5, name: "Грини", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 659.25, color: "bg-green-500" },
-  { id: 6, name: "Йеллоу", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/76bf33b7-4ddd-49ae-8ff9-7e25ca346084.jpg", sound: 783.99, color: "bg-yellow-500" },
-  { id: 7, name: "Редди", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/771dc9d8-82d5-40dc-b971-c60bcc55b0bc.jpg", sound: 880.00, color: "bg-red-500" },
-  { id: 8, name: "Инди", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/6e70ead8-a957-4753-8524-be824f4f7617.jpg", sound: 987.77, color: "bg-indigo-500" }
+  { id: 1, name: "Орен", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/deb83765-bf72-417e-ab08-d3f6d76348c1.jpg", sound: 261.63, color: "bg-orange-500" },
+  { id: 2, name: "Грей", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/bffc8b49-a6c2-4f38-9744-6d66e78f521f.jpg", sound: 329.63, color: "bg-gray-500" },
+  { id: 3, name: "Редди", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/4e210bfb-7310-4940-8cf7-e035b0fb73ac.jpg", sound: 392.00, color: "bg-red-500" },
+  { id: 4, name: "Блэки", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/095ec28a-409c-4c42-aa12-7cac25b5d29a.jpg", sound: 523.25, color: "bg-gray-900" },
+  { id: 5, name: "Пурпл", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/81462c2d-4fee-4784-92a2-319b39bd4037.jpg", sound: 659.25, color: "bg-purple-500" },
+  { id: 6, name: "Грини", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/aed53549-037d-481f-873f-e13731680e76.jpg", sound: 783.99, color: "bg-green-500" },
+  { id: 7, name: "Санни", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/1a219fdb-bd1b-4af5-9a14-24f1b0ec4cf4.jpg", sound: 880.00, color: "bg-yellow-500" },
+  { id: 8, name: "Пинки", image: "https://cdn.poehali.dev/projects/139e7e7d-d2e0-4cf6-9180-f23ae5fbfa03/files/76bf33b7-4ddd-49ae-8ff9-7e25ca346084.jpg", sound: 987.77, color: "bg-pink-500" }
 ];
 
 const Index = () => {
